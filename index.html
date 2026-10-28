@@ -1,170 +1,645 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>清明ワンダーランド</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>清明ワンダーランド｜2.5次元・没入型 推し活ワンダーランド</title>
+  <meta name="description" content="3か月ごとに世界観が入れ替わる、アニメ・マンガの“住民になれる”没入型ポップカルチャーパーク『清明ワンダーランド』。" />
+  <style>
+    :root{
+      --bg:#070812;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.09);
+      --text:#EAF0FF;
+      --muted: rgba(234,240,255,.72);
+      --accent:#7C5CFF;
+      --accent2:#33D6FF;
+      --pink:#FF4FD8;
+      --lime:#B8FF6A;
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 16px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+      background:
+        radial-gradient(1100px 500px at 20% -10%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(900px 420px at 90% 0%, rgba(51,214,255,.28), transparent 55%),
+        radial-gradient(800px 520px at 60% 90%, rgba(255,79,216,.18), transparent 60%),
+        linear-gradient(180deg, #050510, var(--bg));
+      color: var(--text);
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+    .wrap{max-width:1100px; margin:0 auto; padding: 0 18px;}
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(14px);
+      background: rgba(7,8,18,.55);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; text-decoration:none;
+      font-weight:800; letter-spacing:.02em;
+    }
+    .logo{
+      width:40px; height:40px; border-radius:14px;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,.35), transparent 40%),
+        linear-gradient(135deg, rgba(124,92,255,.95), rgba(51,214,255,.8), rgba(255,79,216,.65));
+      box-shadow: 0 10px 30px rgba(124,92,255,.25);
+      border:1px solid rgba(255,255,255,.18);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: conic-gradient(from 90deg, rgba(255,255,255,.0), rgba(255,255,255,.25), rgba(255,255,255,0));
+      transform: rotate(20deg);
+      animation: shine 5s linear infinite;
+      opacity:.6;
+    }
+    @keyframes shine{
+      0%{transform: translateX(-20%) rotate(20deg)}
+      100%{transform: translateX(20%) rotate(20deg)}
+    }
+    .brand small{
+      display:block; font-weight:700; color:var(--muted); letter-spacing:.12em;
+      font-size:12px;
+      margin-top:2px;
+    }
+    .brand .name{font-size:16px;}
+    .links{
+      display:flex; gap:18px; align-items:center;
+      font-size:13px; color:var(--muted);
+    }
+    .links a{
+      text-decoration:none;
+      padding:10px 12px; border-radius:999px;
+      border:1px solid transparent;
+      transition:.2s;
+    }
+    .links a:hover{
+      border-color: rgba(255,255,255,.15);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,240,255,.95);
+    }
+    .cta{
+      display:flex; gap:10px; align-items:center;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding: 10px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:13px;
+      transition:.2s;
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.26)}
+    .btn.primary{
+      border-color: rgba(124,92,255,.5);
+      background: linear-gradient(135deg, rgba(124,92,255,.9), rgba(51,214,255,.35));
+    }
+    main{padding: 28px 0 60px;}
+    .hero{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 22px;
+      align-items: stretch;
+      padding: 18px 0 10px;
+    }
+    @media (max-width: 920px){
+      .hero{grid-template-columns: 1fr; }
+      .links{display:none;}
+    }
+    .heroCard{
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .heroCard:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(700px 260px at 20% 10%, rgba(124,92,255,.45), transparent 60%),
+        radial-gradient(650px 280px at 80% 0%, rgba(51,214,255,.28), transparent 55%),
+        radial-gradient(700px 300px at 70% 90%, rgba(255,79,216,.18), transparent 62%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .heroInner{position:relative; padding: 28px 26px;}
+    .tagRow{display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 14px;}
+    .tag{
+      font-size:12px;
+      padding: 8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,240,255,.85);
+      backdrop-filter: blur(10px);
+    }
+    .tag strong{color:#fff}
+    h1{
+      margin: 8px 0 12px;
+      font-size: 40px;
+      line-height:1.1;
+      letter-spacing:.02em;
+    }
+    @media (max-width:520px){h1{font-size:32px}}
+    .lead{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      max-width: 62ch;
+    }
+    .heroActions{display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+    .heroMeta{
+      padding: 18px;
+      display:flex; flex-direction:column; gap:14px;
+      justify-content:space-between;
+    }
+    .metaGrid{
+      display:grid; grid-template-columns: 1fr; gap: 12px;
+    }
+    .metaItem{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .metaItem .k{font-size:12px; color:var(--muted); margin-bottom: 6px; letter-spacing:.08em}
+    .metaItem .v{font-weight:800}
+    .sparkline{
+      height: 64px;
+      border-radius: 14px;
+      border:1px dashed rgba(255,255,255,.18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      position:relative;
+      overflow:hidden;
+    }
+    .sparkline:before{
+      content:"";
+      position:absolute; inset:-40%;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(124,92,255,.55), transparent 45%),
+        radial-gradient(circle at 60% 40%, rgba(51,214,255,.45), transparent 45%),
+        radial-gradient(circle at 75% 65%, rgba(255,79,216,.35), transparent 48%);
+      filter: blur(2px);
+      animation: floaty 7s ease-in-out infinite;
+      opacity:.9;
+    }
+    @keyframes floaty{
+      0%,100%{transform: translate(0,0)}
+      50%{transform: translate(10px,-8px)}
+    }
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:sans-serif;
-background:#0b1020;
-color:white;
-}
-
-.hero{
-height:100vh;
-background:linear-gradient(
-135deg,
-#6D5DFC,
-#E879F9,
-#67E8F9
-);
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:20px;
-}
-
-.hero h1{
-font-size:72px;
-margin-bottom:20px;
-}
-
-.hero p{
-font-size:24px;
-}
-
-.section{
-padding:80px 10%;
-}
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-margin-top:30px;
-}
-
-.card{
-background:#182848;
-padding:25px;
-border-radius:20px;
-}
-
-.card h3{
-margin-bottom:15px;
-}
-
-.button{
-display:inline-block;
-margin-top:30px;
-background:white;
-color:black;
-padding:15px 30px;
-border-radius:30px;
-text-decoration:none;
-font-weight:bold;
-}
-
-footer{
-padding:50px;
-text-align:center;
-background:#050814;
-}
-</style>
-
+    .section{
+      margin-top: 26px;
+      padding-top: 10px;
+    }
+    .sectionHeader{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .sectionHeader h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.06em;
+      text-transform: none;
+    }
+    .sectionHeader p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.6;
+    }
+    .grid3{display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px;}
+    @media (max-width: 920px){ .grid3{grid-template-columns:1fr;} }
+    .card{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 40px rgba(0,0,0,.22);
+      overflow:hidden;
+      position:relative;
+    }
+    .card .inner{padding: 18px;}
+    .card h3{margin: 0 0 8px; font-size: 15px;}
+    .card p{margin:0; color: var(--muted); line-height:1.8; font-size:13.5px;}
+    .pillRow{display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px;}
+    .pill{
+      font-size:12px;
+      padding: 7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,240,255,.86);
+    }
+    .accentLine{
+      height: 2px;
+      background: linear-gradient(90deg, rgba(124,92,255,.9), rgba(51,214,255,.7), rgba(255,79,216,.6));
+      opacity:.9;
+    }
+    .twoCol{
+      display:grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    @media (max-width: 920px){ .twoCol{grid-template-columns:1fr;} }
+    .list{
+      margin: 10px 0 0; padding: 0; list-style:none; color: var(--muted);
+      line-height:1.9; font-size:13.5px;
+    }
+    .list li{display:flex; gap:10px; align-items:flex-start; margin: 8px 0;}
+    .bullet{
+      width: 22px; height: 22px; border-radius: 8px;
+      background: rgba(124,92,255,.18);
+      border:1px solid rgba(124,92,255,.35);
+      display:flex; align-items:center; justify-content:center;
+      font-size: 12px;
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+    .footer{
+      margin-top: 40px;
+      padding: 26px 0 44px;
+      border-top:1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footRow{
+      display:flex; justify-content:space-between; gap: 18px; flex-wrap:wrap; align-items:flex-start;
+    }
+    .fine{margin-top:10px; line-height:1.8;}
+    .smallLinks{display:flex; gap:12px; flex-wrap:wrap;}
+    .smallLinks a{color: rgba(234,240,255,.72); text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.18)}
+    .smallLinks a:hover{color:#fff}
+  </style>
 </head>
+
 <body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="清明ワンダーランド トップへ">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <div class="name">清明ワンダーランド</div>
+        <small>2.5次元・没入型 推し活ワンダーランド</small>
+      </div>
+    </a>
+    <nav class="links" aria-label="ナビゲーション">
+      <a href="#concept">コンセプト</a>
+      <a href="#attractions">アトラクション</a>
+      <a href="#access">アクセス</a>
+      <a href="#souvenir">お土産ヒント</a>
+    </nav>
+    <div class="cta">
+      <a class="btn" href="#ticket">チケット</a>
+      <a class="btn primary" href="#entry">来場予約</a>
+    </div>
+  </div>
+</header>
 
-<section class="hero">
-<div>
-<h1>清明ワンダーランド</h1>
-<p>好きが、現実になる場所。</p>
-<a href="#" class="button">チケット購入</a>
-</div>
-</section>
+<main id="top">
+  <div class="wrap">
+    <section class="hero" aria-label="ヒーロー">
+      <div class="heroCard">
+        <div class="heroInner">
+          <div class="tagRow">
+            <span class="tag">🪄 <strong>3か月ごと</strong>に世界観チェンジ</span>
+            <span class="tag">🗺️ 「観客」じゃなく <strong>登場人物</strong></span>
+            <span class="tag">✨ AR×没入</span>
+          </div>
+          <h1>推しの世界に、<br/>“住民”として入国。</h1>
+          <p class="lead">
+            清明ワンダーランドは、アニメ・マンガの“世界観”に自分が入国する
+            2.5次元・没入型パーク。<br/>
+            来場者は「観客」ではなく、その世界の「登場人物のひとり」として扱われます。
+          </p>
+          <div class="heroActions">
+            <a class="btn primary" id="ticket" href="#entry">🎟️ チケット/来場日を選ぶ</a>
+            <a class="btn" href="#attractions">🚀 アトラクションを見る</a>
+          </div>
+        </div>
+        <div class="accentLine" aria-hidden="true"></div>
+      </div>
 
-<section class="section">
-<h2>コンセプト</h2>
-<p>
-アニメ・マンガ・2.5次元作品の世界へ入国する、
-日本最大級の没入型テーマパーク。
-来場者は観客ではなく物語の住人です。
-</p>
-</section>
+      <aside class="heroCard heroMeta" aria-label="概要">
+        <div class="metaGrid">
+          <div class="metaItem">
+            <div class="k">場所</div>
+            <div class="v">主要都市から電車で30分圏内<br/>巨大な屋内型ドーム</div>
+          </div>
+          <div class="metaItem">
+            <div class="k">ターゲット</div>
+            <div class="v">10代〜30代女性中心<br/>熱狂的な推し活層</div>
+          </div>
+          <div class="metaItem">
+            <div class="k">体験の軸</div>
+            <div class="v">“推し色”で、あなたが主役</div>
+          </div>
+        </div>
+        <div class="sparkline" aria-hidden="true" title="没入感の演出イメージ"></div>
+      </aside>
+    </section>
 
-<section class="section">
-<h2>アトラクション</h2>
+    <!-- コンセプト -->
+    <section id="concept" class="section">
+      <div class="sectionHeader">
+        <div>
+          <h2>🌙 コンセプト</h2>
+          <p>世界観に“住民”として入国する、新しい推し活体験。</p>
+        </div>
+      </div>
 
-<div class="cards">
+      <div class="twoCol">
+        <div class="card">
+          <div class="inner">
+            <h3>「アニメ・マンガの世界に入る」体験</h3>
+            <p>
+              3か月ごとにテーマとなる人気作品がガラリと入れ替わる、最大級のポップカルチャー特化型パーク。
+              あなたは“観客”ではなく、その世界の一員として迎えられます。
+            </p>
+            <div class="pillRow">
+              <span class="pill">🎭 登場人物として参加</span>
+              <span class="pill">🔁 3か月ごとに入れ替え</span>
+              <span class="pill">🕶️ 没入型演出</span>
+            </div>
+          </div>
+        </div>
 
-<div class="card">
-<h3>聖地巡礼エリア</h3>
-<p>
-ARキャラクターが隣を歩く体験。
-名シーンを等身大で再現。
-</p>
-</div>
+        <div class="card">
+          <div class="inner">
+            <h3>推しが“横にいる”感覚へ</h3>
+            <p>
+              AR（拡張現実）を活用し、作中のキャラクターがあなたの時間に重なっていくような体験を設計。
+              その場にいるからこそ生まれる“推し活の物語”を作ります。
+            </p>
+            <ul class="list">
+              <li><span class="bullet">✦</span> 写真がそのまま“入国記録”になる</li>
+              <li><span class="bullet">✦</span> 物語の導線で自然に回遊</li>
+              <li><span class="bullet">✦</span> 世界観の温度ごと体験する</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="card">
-<h3>ギルド・カフェ</h3>
-<p>
-作品に登場した料理を完全再現。
-推しと同じ食事を楽しめます。
-</p>
-</div>
+    <!-- アトラクション -->
+    <section id="attractions" class="section">
+      <div class="sectionHeader">
+        <div>
+          <h2>🎡 アトラクション・施設</h2>
+          <p>“名シーン”を等身大で、推しと同じテンポで。</p>
+        </div>
+      </div>
 
-<div class="card">
-<h3>痛バッグ工房</h3>
-<p>
-限定パーツを組み合わせて
-世界に1つだけの推し活グッズを制作。
-</p>
-</div>
+      <div class="grid3">
+        <article class="card">
+          <div class="inner">
+            <h3>『聖地巡礼エリア』</h3>
+            <p>
+              作中の名シーンの街並みを等身大で再現。<br/>
+              ARでキャラクターがあなたの横を歩き、記憶に残る巡礼へ。
+            </p>
+            <div class="pillRow">
+              <span class="pill">🧭 AR散歩</span>
+              <span class="pill">🏙️ 等身大街並み</span>
+              <span class="pill">📸 入国フォト</span>
+            </div>
+          </div>
+        </article>
 
-</div>
-</section>
+        <article class="card">
+          <div class="inner">
+            <h3>『ギルド・カフェ』</h3>
+            <p>
+              作中のキャラクターが食べていた「あの飯」を完全再現して提供。<br/>
+              香りまで“その世界”に寄せたフード体験。
+            </p>
+            <div class="pillRow">
+              <span class="pill">🍽️ 完全再現</span>
+              <span class="pill">☕ 物語の味</span>
+              <span class="pill">🧁 コラボスイーツ</span>
+            </div>
+          </div>
+        </article>
 
-<section class="section">
-<h2>限定グッズ</h2>
+        <article class="card">
+          <div class="inner">
+            <h3>『痛バッグ・カスタマイズ工房』</h3>
+            <p>
+              ここでしか手に入らない限定パーツで、推し活グッズを自分仕様に。<br/>
+              “推し色”で完成させるコレクション体験。
+            </p>
+            <div class="pillRow">
+              <span class="pill">🧩 限定パーツ</span>
+              <span class="pill">🎨 推しカラーカスタム</span>
+              <span class="pill">📦 コレクター向け</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-<div class="cards">
+    <!-- アクセス -->
+    <section id="access" class="section">
+      <div class="sectionHeader">
+        <div>
+          <h2>🛰️ アクセス/ロケーション</h2>
+          <p>主要都市から電車で30分圏内。屋内ドームで快適に没入。</p>
+        </div>
+      </div>
 
-<div class="card">
-<h3>推しカラーシリーズ</h3>
-<p>
-9色展開のボトル・バッグ・パーカー。
-</p>
-</div>
+      <div class="twoCol">
+        <div class="card">
+          <div class="inner">
+            <h3>巨大な屋内型ドーム施設</h3>
+            <p>
+              天候に左右されず、入国してから“ずっと没入”できる設計。
+              1日を通して世界観が続くように、導線も統一しています。
+            </p>
+            <div class="pillRow">
+              <span class="pill">🌧️ 全天候対応</span>
+              <span class="pill">🏟️ 屋内ドーム</span>
+              <span class="pill">🕰️ 長時間滞在向け</span>
+            </div>
+          </div>
+        </div>
 
-<div class="card">
-<h3>限定アクリルチャーム</h3>
-<p>
-毎シーズン変わるコレクターアイテム。
-</p>
-</div>
+        <div class="card">
+          <div class="inner">
+            <h3>電車で30分圏内</h3>
+            <p>
+              乗り換えストレスを減らし、遠征でも日帰りでも楽しめる距離感に。
+              推し活は“行くこと”も体験の一部だから。
+            </p>
+            <ul class="list">
+              <li><span class="bullet">🚋</span> 主要都市から電車で30分圏内</li>
+              <li><span class="bullet">🧚</span> 迷わない回遊導線</li>
+              <li><span class="bullet">🛍️</span> 購買までシームレスに</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="card">
-<h3>プレミアム会員限定</h3>
-<p>
-シリアルナンバー入りグッズ。
-</p>
-</div>
+    <!-- 来場予約（簡易） -->
+    <section id="entry" class="section">
+      <div class="sectionHeader">
+        <div>
+          <h2>📝 来場予約（デモフォーム）</h2>
+          <p>このページはデザインサンプルです。入力内容は送信されません。</p>
+        </div>
+      </div>
 
-</div>
-</section>
+      <div class="card">
+        <div class="inner">
+          <div class="twoCol">
+            <div>
+              <h3>入国チケット</h3>
+              <p>希望のテーマ回（3か月ごと）や人数を選んで、当日の没入準備へ。</p>
+              <div class="pillRow">
+                <span class="pill">✨ テーマ回：入れ替え制</span>
+                <span class="pill">💎 推し活専用導線</span>
+              </div>
+            </div>
+            <div>
+              <form onsubmit="event.preventDefault(); alert('デモのため送信されません。');" aria-label="予約フォーム">
+                <label style="display:block; color:var(--muted); font-size:12px; margin-bottom:6px; letter-spacing:.08em;">テーマ回</label>
+                <select style="width:100%; padding:12px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color:var(--text); margin-bottom:12px;">
+                  <option>次回テーマ：◯◯（仮）</option>
+                  <option>第1回：△△（仮）</option>
+                  <option>第2回：□□（仮）</option>
+                </select>
 
-<footer>
-© SEIMEI WONDERLAND
+                <label style="display:block; color:var(--muted); font-size:12px; margin-bottom:6px; letter-spacing:.08em;">人数</label>
+                <input type="number" min="1" max="10" value="2" style="width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color:var(--text); margin-bottom:12px;" />
+
+                <label style="display:block; color:var(--muted); font-size:12px; margin-bottom:6px; letter-spacing:.08em;">連絡先（デモ）</label>
+                <input type="email" placeholder="example@pushfan.jp" style="width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color:var(--text); margin-bottom:12px;" />
+
+                <button class="btn primary" type="submit" style="width:100%; padding:12px 16px;">入国予約を確定（デモ）</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- お土産開発ヒント -->
+    <section id="souvenir" class="section">
+      <div class="sectionHeader">
+        <div>
+          <h2>🎁 お土産開発のヒント（推し活設計）</h2>
+          <p>モデル②：『2.5次元・没入型』の世界観に合わせる。</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <div class="inner">
+            <h3>1) カラーバリエーション（推し色）</h3>
+            <p>
+              “推し色”を選べる仕組みで、購入体験そのものをカスタム化。
+              工房や会場導線と連動させると強いです。
+            </p>
+            <ul class="list">
+              <li><span class="bullet">🎨</span> 推し色カラーの選択（タグ/刻印/袋）</li>
+              <li><span class="bullet">✨</span> 写真映えするメタリック仕様</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="inner">
+            <h3>2) 普段使いできる</h3>
+            <p>
+              “家でも世界観が続く”アイテムが人気。推し活の熱を生活へ持ち帰る設計。
+            </p>
+            <ul class="list">
+              <li><span class="bullet">👜</span> 日常で使えるキーホルダー/カードケース</li>
+              <li><span class="bullet">☕</span> カフェ連動：マグ/スプーン等</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="inner">
+            <h3>3) コレクター性</h3>
+            <p>
+              3か月ごとに入れ替わるからこそ、「集め続ける理由」を用意できます。
+            </p>
+            <ul class="list">
+              <li><span class="bullet">🔁</span> テーマ回ごとの限定パーツ</li>
+              <li><span class="bullet">📦</span> 台座/保管ケース付き（回収欲を刺激）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" aria-label="最終CTA">
+      <div class="card">
+        <div class="inner" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+          <div>
+            <h3 style="margin:0 0 8px; font-size:16px;">入国準備、できてますか？✨</h3>
+            <p style="margin:0; color:var(--muted); line-height:1.8; font-size:13.5px;">
+              「観客」ではなく、「登場人物のひとり」へ。<br/>
+              次のテーマ回まで、推し色の“物語”を待っていてください。
+            </p>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" href="#entry">来場予約へ</a>
+            <a class="btn" href="#attractions">施設を見て回る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footRow">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="logo" aria-hidden="true" style="width:34px;height:34px;border-radius:12px;"></div>
+          <div>
+            <div style="font-weight:900; color:#fff;">清明ワンダーランド</div>
+            <div class="fine">© 清明ワンダーランド（架空）<br/>2.5次元・没入型 推し活ワンダーランド</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:900; color:#fff; margin-bottom:10px;">リンク</div>
+        <div class="smallLinks">
+          <a href="#concept">コンセプト</a>
+          <a href="#attractions">アトラクション</a>
+          <a href="#access">アクセス</a>
+          <a href="#souvenir">お土産ヒント</a>
+        </div>
+        <div class="fine">※本ページはデザインサンプル（架空テーマパーク）です。</div>
+      </div>
+    </div>
+  </div>
 </footer>
-
 </body>
 </html>
